@@ -8,14 +8,14 @@ function App() {
     nationalities: 'fr',
     seed: 0,
   });
-  // const [users, setUsers] = React.useState([]);
+
   const handleChange = (target) => {
     setParams((pervState) => ({ ...pervState, [target.name]: target.value }));
   };
   return (
     <>
       <NavBar onChange={handleChange} outputParams={params} />
-      <MainPage outputParams={params} />
+      <MainPage outputParams={params} onChange={handleChange} />
     </>
   );
 }

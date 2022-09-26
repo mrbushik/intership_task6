@@ -3,25 +3,6 @@ import RangeField from './form/rangeField';
 import TextField from './form/textField';
 
 function NavBar({ onChange, outputParams }) {
-  // const [outputParams, setParams] = React.useState({
-  //   range: 0,
-  //   nationalities: 'uk',
-  //   seed: 0,
-  // });
-  // const handleChange = (target) => {
-  //   setParams((pervState) => ({ ...pervState, [target.name]: target.value }));
-  // };
-  // const handleValudate = (target) => {
-  //   // console.log(+target.value);
-  //   isNumber(+target.value);
-  //   if (isNumber(Number(target.value))) {
-  //     // console.log('good');
-
-  //     setParams((pervState) => ({ ...pervState, [target.name]: target.value }));
-  //   } else {
-  //     console.log('bad');
-  //   }
-  // };
   const isNumber = (num) => {
     console.log(num);
     return typeof num === 'number' && !isNaN(num);
