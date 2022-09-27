@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
+import User from './user';
 
 function MainPage({ outputParams, onChange }) {
   const [users, setUsers] = React.useState([]);
@@ -24,25 +25,28 @@ function MainPage({ outputParams, onChange }) {
   }, []);
 
   React.useEffect(() => {
-    fetch(
-      `https://randomuser.me/api/?nat=${outputParams.nationalities}&results=20${
-        outputParams.seed ? '&seed=1.' + outputParams.seed : ''
-      }`,
-      {
-        method: 'GET',
-      },
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setUsers([...data.results]);
-      })
-      .catch((error) => '');
-  }, [outputParams]);
+    // fetch(
+    //   `https://randomuser.me/api/?nat=${outputParams.nationalities}&results=20${
+    //     outputParams.seed ? '&seed=1.' + outputParams.seed : ''
+    //   }`,
+    //   {
+    //     method: 'GET',
+    //   },
+    // )
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setUsers([...data.results]);
+    //   })
+    //   .catch((error) => '');
+  }, [outputParams.seed, outputParams.nationalities]);
 
+  React.useEffect(() => {
+    setFetching((pervState) => pervState + 1);
+  }, [outputParams.rangeValue]);
   const getUsers = async () => {
-    let quantityResaults = 20;
+    let quantityResaults = 2; //дописать ноль
     if (fetching > 1) {
-      quantityResaults = 10;
+      quantityResaults = 1; //дописать ноль
     }
     await fetch(
       `https://randomuser.me/api/?nat=${outputParams.nationalities}&results=${quantityResaults}${
@@ -86,13 +90,24 @@ function MainPage({ outputParams, onChange }) {
         <tbody>
           {users &&
             users.map((user, index) => (
-              <tr key={index}>
-                <th scope="row">{index}</th>
-                <td> {user.login.uuid}</td>
-                <td>{` ${user.name.first} ${user.name.last}`}</td>
-                <td>{`${user.location.city} ${user.location.state}`}</td>
-                <td>{user.phone}</td>
-              </tr>
+              <User
+                rangeValue={outputParams.range}
+                key={index}
+                index={index}
+                id={user.login.uuid}
+                name={user.name.first}
+                surname={user.name.last}
+                city={user.location.city}
+                state={user.location.state}
+                phone={user.phone}
+              />
+              // <tr key={index}>
+              //   <th scope="row">{index}</th>
+              //   <td> {user.login.uuid}</td>
+              //   <td>{` ${user.name.first} ${user.name.last}`}</td>
+              //   <td>{`${user.location.city} ${user.location.state}`}</td>
+              //   <td>{user.phone}</td>
+              // </tr>
             ))}
         </tbody>
       </table>
